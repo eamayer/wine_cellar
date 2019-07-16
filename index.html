@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+  <link href="css/styles.css" type="text/css" rel="stylesheet">
+  <script src="js/jquery-3.4.1.js"></script>
+  <script src="js/scripts.js"></script>
+
+  <meta charset="utf-8">
+  <title></title>
+</head>
+<body>
+  <div class="container"
+    <h1>Wine Cellar</h1>
+    <form id="wine-entry">
+      <div class="form-group">
+        <p>Wine Type (red or white):</p>
+        <select class="form-control" id="wine-type">
+          <option value="red">Red</option>
+          <option value="white">White</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="winery">What is the winery:</label>
+        <input type="text" class="form-control" id="winery">
+      </div>
+      <div class="form-group">
+        <label for="year">Year</label>
+        <input id="year" type="number">
+      </div>
+      <button type="submit" class="btn-primary">Add wine to cellar</button>
+    </form>
+    <hr>
+    <h2>Cellar:</h2>
+    <ul id="wines">
+    </ul>
+    <h2>Drank</h2>
+    <ul id="drank">
+    </ul>
+  </div>
+
+  <div id="show-wine">
+    <p>Winery: <span class="winery"></span></p>
+    <p>Vintage: <span class="year"></span></p>
+    <p>Type: <span class="type"></span></p>
+    <p>Drink by:<span class="drinkBy"></span></p>
+    <div id="buttons">
+    </div>
+  </div>
+
+  <div id="drank">
+    <p>Winery: <span class="winery"></span></p>
+    <p>Vintage: <span class="year"></span></p>
+    <p>Type: <span class="type"</span></p>
+    <p>Rating: <span class="rating"></span></p>
+  </div>
+
+  </body>
+</html>
