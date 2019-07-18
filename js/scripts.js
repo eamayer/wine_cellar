@@ -1,6 +1,6 @@
 function Cellar (){
-  this.wines = [];
-  this.currentId = 0;
+  this.wines = [],
+  this.currentId = 0
 
 }
 
@@ -17,8 +17,8 @@ Cellar.prototype.assignId = function () {
 }
 
 
-Cellar.prototype.findWine = function (id) {
-  for (var i= 0; i<this.wines.length; i++) {
+Cellar.prototype.findWine = function(id) {
+  for (var i= 0; i< this.wines.length; i++) {
     if (this.wines[i]) {
       if (this.wines[i].id === id) {
         return this.wines [i];
@@ -30,18 +30,43 @@ Cellar.prototype.findWine = function (id) {
 
 
 
-function Wine(type, winery, year, drinkBy, rating){
-  this.type = type;
-  this.winery = winery;
-  this.year = year;
-  this.drinkBy = [];
-  this.rating = [];
+Cellar.prototype.moveWine = function(id) {
+  for (var i=0; i< this.wines.length; i++) {
+    if (this.wines[i]) {
+      if (this.wines[i].id == id) {
+        delete this.wines[i];
+        return true;
+      }
+    }
+  };
+  return false;
+}
+
+
+//business logic for wines ---------
+
+function Wine(type, winery, year){
+  this.type = type,
+  this.winery = winery,
+  this.year = year
+
 }
 
 Wine.prototype.wineEntry = function(){
-  return this.type + " " + this.winery + " " + this.year
-
+  return this.type + " " + this.winery + " " + this.year;
 }
+
+Wine.prototype.drinkBy = function () {
+  if(wineType === "red"){
+    return this.year += 10;
+  }else if (wineType === "white"){
+    return this.year += 5;
+  }
+}
+
+
+
+//User Cellar Logic
 var cellar = new Cellar();
 
 function displayWineDetails(cellarToDisplay) {
@@ -52,40 +77,43 @@ function displayWineDetails(cellarToDisplay) {
   });
   wineList.html(htmlForWineInfo);
 };
-var drinkBy = function(year){
 
   var wineType = $('select#wine-type').val();
 
-
-
-  if(wineType === "red"){
-    return this.year += 10;
-  }else if (wineType === "white"){
-    return this.year += 5;
+  function showWine(wineId) {
+    var wine = cellar.findWine(wineId);
+    $("#show-wine").show();
+    $(".type").html(wine.type);
+    $(".winery").html(wine.winery);
+    $(".year").html(wine.year);
+    $(".drinkBy").html(wine.drinkBy);
+    var buttons = $("#buttons");
+    buttons.empty();
+    buttons.append("<button class='deleteButton' id=" + wine.id + ">Delete</button>");
   }
-console.log(wineType);
-}
 
+function attachWineListeners() {
+  $("ul#wines").on("click", "li", function() {
+    showWine(this.id);
+  });
+  $("#buttons").on("click", ".deleteButton", function() {
+    cellar.moveWine(this.id);
+    $("#show-wine").hide();
+    displayWineDetails(cellar);
+  });
+};
 
-
-function showWine(wineId) {
-  var wine = cellar.findWine(wineId);
-  $("#show-wine").show();
-  $(".type").html(wine.type);
-  $(".winery").html(wine.winery);
-  $(".year").html(wine.year);
-  $(".drinkBy").html(contact.address);
-  var buttons = $("#buttons");
-  buttons.empty();
-  buttons.append("<button class='deleteButton' id=" + contact.id + ">Delete</button>");
-}
 
 $(document).ready(function(){
+  attachWineListeners();
   $('form#wine-entry').submit(function(event){
     event.preventDefault();
-    var wine = new Wine ();
+    var type = $("select#wine-type").val();
+    var winery = $("input#winery").val();
+    var year = $("input#year").val();
+    var newWine = new Wine(type, winery, year);
 
-    $('ul#wines').append('<li>' + wine + '</li>')
-  });
-
-});
+    cellar.addWine(newWine);
+    displayWineDetails(cellar);
+  })
+})
