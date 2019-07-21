@@ -19,22 +19,22 @@ Cellar.prototype.assignId = function () {
 
 Cellar.prototype.findWine = function(id) {
   for (var i= 0; i< this.wines.length; i++) {
-    if (this.wines[i]) {
-      if (this.wines[i].id === id) {
-        return this.wines [i];
-      }
+    if (this.wines[i].id == id) {
+      return this.wines[i];
     }
   };
   return false;
 }
 
 
-
 Cellar.prototype.moveWine = function(id) {
   for (var i=0; i< this.wines.length; i++) {
     if (this.wines[i]) {
       if (this.wines[i].id == id) {
-        delete this.wines[i];
+        this.wines[i].rating = parseInt(prompt("What did you think of the wine?"));
+        this.wines.forEach(function(wine){
+          $("#drankList").append("<li id=" + wine.id + ">" + wine.winery + " " + wine.type + " " + wine.rating + "</li>");
+        });
         return true;
       }
     }
@@ -83,10 +83,10 @@ function displayWineDetails(cellarToDisplay) {
   function showWine(wineId) {
     var wine = cellar.findWine(wineId);
     $("#show-wine").show();
-    $(".type").html(wine.type);
-    $(".winery").html(wine.winery);
-    $(".year").html(wine.year);
-    $(".drinkBy").html(wine.drinkBy);
+    $(".type").text(wine.type);
+    $(".winery").text(wine.winery);
+    $(".year").text(wine.year);
+    $(".drinkBy").text(wine.drinkBy);
     var buttons = $("#buttons");
     buttons.empty();
     buttons.append("<button class='deleteButton' id=" + wine.id + ">Delete</button>");
